@@ -6,25 +6,25 @@ import exceptions.InvalidRomanException;
 import interfaces.IAlgarismo;
 
 /**
- * Implementação do conversor de números romanos;
+ * ImplementaÃ§Ã£o do conversor de nÃºmeros romanos;
  * 
- * Base para construção do algoritmo do Professor Francisco Edmundo;
+ * Base para construÃ§Ã£o do algoritmo do Professor Francisco Edmundo;
  * 
  * @author Jequelia Santana
  */
 public class JequeliaAlgorismo implements IAlgarismo {
 
-	// Constantes para tradução do número romano
+	// Constantes para traduÃ§Ã£o do nÃºmero romano
 	private final static Integer BASE_ROMANO = 10;
 	private final static Integer MULT_GRUPO_ROMANO_DE_5 = 5;
 	private final static String GRUPO_ROMANOS_DE_1 = "IXCM";
 	private final static String GRUPO_ROMANOS_DE_5 = "VLD";
-	// Valor dos números romanos
+	// Valor dos nÃºmeros romanos
 	private final static char ROMANO_MIL = 'M';
 	private final static char ROMANO_CEM = 'C';
 	private final static char ROMANO_DEZ = 'X';
 	private final static char ROMANO_UM = 'I';
-	// Validação dos números
+	// ValidaÃ§Ã£o dos nÃºmeros
 	private final static char LIMITE_MAX_DE_REP = 4;
 
 	@Override
@@ -48,8 +48,8 @@ public class JequeliaAlgorismo implements IAlgarismo {
 	
 	/**
 	 * Verifica se existe algum caractere no numero romamo que se repta mais de 3 vezes
-	 * se sim, lança uma exception. Verifica também se a entrada é nula. 
-	 * @param numeroRomano - número de entrada;
+	 * se sim, lanÃ§a uma exception. Verifica tambÃ©m se a entrada Ã© nula. 
+	 * @param numeroRomano - nÃºmero de entrada;
 	 */
 	private void validarRomano(String numeroRomano) {
 		if (StringUtils.isBlank(numeroRomano)) {
@@ -57,10 +57,10 @@ public class JequeliaAlgorismo implements IAlgarismo {
 		}
 		char[] caracteres = numeroRomano.toCharArray();
 
-		int m = 0;
-		int x = 0;
-		int i = 0;
-		int c = 0;
+		int letra_m = 0;
+		int letra_x = 0;
+		int letra_i = 0;
+		int letra_c = 0;
 
 		for (int y = 0; y < caracteres.length; y++) {
 			if (caracteres[y] == ROMANO_MIL) {
@@ -73,14 +73,18 @@ public class JequeliaAlgorismo implements IAlgarismo {
 				c++;
 			}
 		}
-		if (c >= LIMITE_MAX_DE_REP || x >= LIMITE_MAX_DE_REP || i >= LIMITE_MAX_DE_REP || m >= LIMITE_MAX_DE_REP) {
+		if (letra_c >= LIMITE_MAX_DE_REP || 
+		    letra_x >= LIMITE_MAX_DE_REP || 
+		    letra_i >= LIMITE_MAX_DE_REP || 
+		    letra_m >= LIMITE_MAX_DE_REP) {
 			throw new InvalidRomanException();
 		}
 	}
 
 	/**
-	 * Ele soma o valor do metodo
+	 * Ele traduz o caractere pelos dois grupos para chegar ao valor indo-arÃ¡bicos
 	 * @param caractere - letra separada da string de entrada;
+	 * @return int - retorna o caractere romano traduzido para indo-arÃ¡bicos.
 	 */
 	private int traduzirNumeralRomano(char caractere) {
 		return traduzirRomanoPorGrupo(caractere, GRUPO_ROMANOS_DE_1)
@@ -89,23 +93,31 @@ public class JequeliaAlgorismo implements IAlgarismo {
 	
 	
 	/**
-	 * Ele faz o calculo d
+	 * Ele pega o caractere romano e retorna a posiÃ§Ã£o dele
+	 * no grupo de romanos(GRUPO_ROMANOS_DE_1 ou GRUPO_ROMANOS_DE_5)
+	 * depois eleva o numero da BASE_ROMANO(10). 
+	 * Ex: romano = V(5)
+	 * grupo romano = 5
+	 * base romano = 10
+	 * o V ta na posiÃ§Ã£o 0
+	 * resultado = 10^0 
+	 * 
 	 * @param romano - caractere romano ;
 	 * @param grupo - base de 1 ou de 5 ;
-	 * @return int - retorna o valor da base.
+	 * @return int - retorna o valor 
 	 */
 	private int traduzirRomanoPorGrupo(char romano, String grupo) {
 		return (int) Math.floor(Math.pow(BASE_ROMANO, grupo.indexOf(romano)));
 	}
 
 	/**
-	 * Verifica se o número atual é menor ou maior que o número anterior, se o
-	 * número atual for menor que o número anterior retorna -1, caso contrário +1
+	 * Verifica se o nÃºmero atual Ã© menor ou maior que o nÃºmero anterior, se o
+	 * nÃºmero atual for menor que o nÃºmero anterior retorna -1, caso contrÃ¡rio +1
 	 * 
-	 * Quando +1 o número está a direita; Quando -1 o número está a esquerda;
+	 * Quando +1 o nÃºmero estÃ¡ a direita; Quando -1 o nÃºmero estÃ¡ a esquerda;
 	 * 
-	 * @param numeroAtual    - número da sequência;
-	 * @param numeroAnterior - número anterior da sequência;
+	 * @param numeroAtual    - nÃºmero da sequÃªncia;
+	 * @param numeroAnterior - nÃºmero anterior da sequÃªncia;
 	 * @return int - sendo -1 quando negativo ou +1 quando positivo.
 	 */
 	private int verificarPosicaoDoNumero(int numeroAtual, int numeroAnterior) {
